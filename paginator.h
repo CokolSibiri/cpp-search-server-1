@@ -27,9 +27,9 @@ private:
 };
 
 template <typename Iterator>
-std::ostream& operator<<(std::ostream& output, IteratorRange<Iterator> iteratorrange) {
+std::ostream& operator<<(std::ostream& output, IteratorRange<Iterator> iterator_range) {
     using namespace std::literals;
-    for (auto ir = iteratorrange.begin(); ir != iteratorrange.end(); ++ir ) {
+    for (auto ir = iterator_range.begin(); ir != iterator_range.end(); ++ir ) {
     output << "{ document_id = "s << ir->id << ", relevance = "s << ir->relevance << ", rating = "s << ir->rating << " }"s;
     }
     return output;
@@ -41,7 +41,6 @@ bool operator==(IteratorRange<Iterator> left, IteratorRange<Iterator> right) {
            left.end() == right.end();
 }
 
-
 template <typename Iterator>
 class Paginator {
 public:
@@ -50,7 +49,7 @@ public:
 
         while (b + page_size < end) {
             pages_.push_back(IteratorRange<Iterator>(b, b + page_size));
-            b = b + page_size;
+            b += page_size;
         }
         if (b < end) {
             pages_.push_back(IteratorRange<Iterator>(b, end));
